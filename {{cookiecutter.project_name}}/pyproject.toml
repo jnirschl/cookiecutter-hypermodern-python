@@ -23,7 +23,7 @@ Changelog = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.proj
 [tool.poetry.dependencies]
 python = ">=3.8,<4.0"
 click = ">=8.0.1"
-python-dotenv = "^0.20.0"
+python-dotenv = ">=0.19.0"
 
 [tool.poetry.dev-dependencies]
 Pygments = ">=2.10.0"
