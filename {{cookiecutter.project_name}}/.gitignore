@@ -39,10 +39,73 @@ htmlcov/
 /.nox/
 /.coverage
 /.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
 /.nox/
+/dist/
 /.python-version
 /.pytype/
-/dist/
-/docs/_build/
-/src/*.egg-info/
-__pycache__/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# DotEnv configuration
+.env
+
+# Database
+*.db
+*.rdb
+
+# Pycharm
+.idea
+
+# VS Code
+.vscode/
+
+# Spyder
+.spyproject/
+
+# Jupyter NB Checkpoints
+.ipynb_checkpoints/
+
+# Mac OS-specific storage files
+.DS_Store
+
+# vim
+*.swp
+*.swo
+
+# Mypy cache
+.mypy_cache/
+
+# emacs
+*~
+*.org
+#*#
+
+# venv
+/venv/
+
+# exclude data, logs, models, and results from source control by default
+/logs/
+/models/
+/results/
+/results/*.png
+/results/*.jpg
+
+# slurm logging
+*.out
+*.err
+slurm*.out
