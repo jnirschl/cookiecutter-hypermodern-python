@@ -43,8 +43,6 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
-/.nox/
-/dist/
 /.python-version
 /.pytype/
 
@@ -69,7 +67,7 @@ target/
 *.rdb
 
 # Pycharm
-.idea
+*.idea/*
 
 # VS Code
 .vscode/
@@ -97,6 +95,12 @@ target/
 
 # venv
 /venv/
+
+# pycharm
+.idea
+
+# dvc
+.dvc
 
 # exclude data, logs, models, and results from source control by default
 /logs/
