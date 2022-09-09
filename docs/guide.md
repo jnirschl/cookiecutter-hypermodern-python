@@ -239,9 +239,6 @@ Here is a complete list of the project variables defined by this template:
 - - `package_name`
   - Import name of the package
   - `hypermodern_python`
-- - `friendly_name`
-  - Friendly project name
-  - `Hypermodern Python`
 - - `author`
   - Primary author
   - Katherine Johnson

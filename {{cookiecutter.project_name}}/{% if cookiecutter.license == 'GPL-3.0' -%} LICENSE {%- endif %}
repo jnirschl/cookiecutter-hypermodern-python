@@ -1,4 +1,5 @@
-{{ cookiecutter.friendly_name }}
+{{ cookiecutter.project_name.replace('-', ' ').title() }}
+GPL-3.0 License
 Copyright (C) {{ cookiecutter.copyright_year }}  {{ cookiecutter.author }}
 
 This program is free software: you can redistribute it and/or modify

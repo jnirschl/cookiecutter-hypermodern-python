@@ -1,0 +1,90 @@
+[tool.poetry]
+name = "cookiecutter-hypermodern-python"
+version = "0.1.0"
+description = "An adaptation of cookiecutter hypermodern-python template by Claudio Jolowicz"
+authors = ["Jeff Nirschl <jnirschl@stanford.edu>"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+cookiecutter = "^2.1.1"
+
+[tool.poetry.dev-dependencies]
+Pygments = ">=2.10.0"
+autopep8 = "1.6.0"
+black = "^22.8.0"
+coverage = {extras = ["toml"], version = ">=6.2"}
+darglint = ">=1.8.1"
+flake8 = "^4.0.1,<5.0.0"
+flake8-bandit = ">=2.1.2"
+flake8-bugbear = ">=21.9.2"
+flake8-docstrings = ">=1.6.0"
+flake8-rst-docstrings = ">=0.2.5"
+furo = ">=2021.11.12"
+isort = ">=5.10.1"
+mypy = ">=0.930"
+nox-poetry = "^1.0.1"
+pep8-naming = ">=0.12.1"
+pre-commit = ">=2.16.0"
+pre-commit-hooks = ">=4.1.0"
+pytest = "^7.1.2"
+pytest-randomly = "^3.12.0"
+pyupgrade = ">=2.29.1"
+safety = ">=1.10.3"
+sphinx = ">=4.3.2"
+sphinx-autobuild = ">=2021.3.14"
+sphinx-click = ">=3.0.2"
+typeguard = ">=2.13.3"
+xdoctest = {extras = ["colors"], version = ">=0.15.10"}
+myst-parser = {version = ">=0.16.1"}
+nox = "^2022.1.7"
+
+[tool.coverage.paths]
+source = ["src", "*/site-packages"]
+tests = ["tests", "*/tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["{{cookiecutter.package_name}}", "tests"]
+
+[tool.coverage.report]
+show_missing = true
+fail_under = 90
+
+[tool.autopep8]
+max_line_length = 120
+ignore = "E501,W6"  # or ["E501", "W6"]
+in-place = true
+recursive = true
+aggressive = 3
+filename = "*.py,*.pyx,*.pxd,*.pxi"
+exclude = "**/docs/**, **/site-packages/**, **/.dvc/**, **/.git/**, **/.pytest_cache/**, **/notebooks/**, **/reports/**, **/.ipynb_checkpoints/**"
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.isort]
+profile = "black"
+force_single_line = true
+lines_after_imports = 2
+extend_skip = [".md", ".json"]
+skip_glob = ["**/docs/**", "**/site-packages/**"]
+
+[tool.mypy]
+strict = true
+warn_unreachable = true
+pretty = true
+show_column_numbers = true
+show_error_codes = true
+show_error_context = true
+
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "debug: marks tests as actively under debugging (deselect with '-m \"not debug\"')",
+]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
