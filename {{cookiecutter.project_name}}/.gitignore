@@ -94,20 +94,17 @@ target/
 #*#
 
 # venv
-/venv/
-
-# pycharm
-.idea
+venv/
 
 # dvc
 .dvc
 
 # exclude data, logs, models, and results from source control by default
-/logs/
-/models/
-/results/
-/results/*.png
-/results/*.jpg
+logs/
+models/
+results/
+results/**/*.png
+results/**/*.jpg
 
 # slurm logging
 *.out

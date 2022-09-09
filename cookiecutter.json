@@ -7,7 +7,7 @@
   "github_user": "octocat",
   "version": "0.0.0",
   "copyright_year": "{% now 'utc', '%Y' %}",
-  "license": ["MIT", "Apache-2.0", "GPL-3.0", "BSD-3"],
+  "license": ["MIT", "Apache-2.0", "GPL-3.0", "BSD-3-Clause"],
   "_copy_without_render": ["*.html"],
   "development_status": [
     "Development Status :: 1 - Planning",

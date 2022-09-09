@@ -20,7 +20,7 @@ args = {
     "github_user": "octocat",
     "description": "A Tesla Coil is a radio frequency oscillator that drives a double-tuned resonant transformer to produce high voltages with low currents",
     "email": "user@mail.com",
-    "license": "BSD-3",
+    "license": "BSD-3-Clause",
     "copyright_year": "1891",
     "version": "1.0.0",
 }
