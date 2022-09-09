@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import json
+import shutil
 from pathlib import Path
 
 
@@ -18,6 +19,13 @@ def reindent_cookiecutter_json():
     with path.open(mode="w") as io:
         json.dump(data, io, sort_keys=True, indent=2)
         io.write("\n")
+
+
+def remove_idea_folder():
+    """Remove the idea folder created by the cookiecutter template."""
+    path = Path(".idea")
+    if path.exists():
+        shutil.rmtree(path)
 
 
 if __name__ == "__main__":
