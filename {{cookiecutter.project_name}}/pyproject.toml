@@ -68,7 +68,7 @@ source = ["{{cookiecutter.package_name}}", "tests"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 90
+fail_under = 80
 
 [tool.autopep8]
 max_line_length = 120
@@ -90,7 +90,6 @@ lines_after_imports = 2
 extend_skip = [".md", ".json"]
 skip_glob = ["**/docs/**", "**/site-packages/**"]
 
-
 [tool.mypy]
 strict = true
 warn_unreachable = true
@@ -105,7 +104,6 @@ markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
     "debug: marks tests as actively under debugging (deselect with '-m \"not debug\"')",
 ]
-
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

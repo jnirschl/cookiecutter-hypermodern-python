@@ -5,7 +5,7 @@ description = "An adaptation of cookiecutter hypermodern-python template by Clau
 authors = ["Jeff Nirschl <jnirschl@stanford.edu>"]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 cookiecutter = "^2.1.1"
 
 [tool.poetry.dev-dependencies]

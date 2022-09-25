@@ -88,16 +88,12 @@ target/
 # Mypy cache
 .mypy_cache/
 
-# emacs
-*~
-*.org
-#*#
+# emacs backup and autosave files
+/**/*~
+/**/*#
 
 # venv
 venv/
-
-# dvc
-.dvc
 
 # exclude data, logs, models, and results from source control by default
 logs/
