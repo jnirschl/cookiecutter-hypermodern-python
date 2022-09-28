@@ -7,6 +7,7 @@ authors = ["Jeff Nirschl <jnirschl@stanford.edu>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 cookiecutter = "^2.1.1"
+python-dotenv = "^0.21.0"
 
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
