@@ -97,7 +97,10 @@ venv/
 
 # exclude data, logs, models, and results from source control by default
 logs/
-models/
+models/*.ckpt
+models/*.pickle
+models/*.pt
+models/*.pth
 results/
 results/**/*.png
 results/**/*.jpg

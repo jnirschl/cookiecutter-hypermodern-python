@@ -8,7 +8,7 @@ authors = ["Jeff Nirschl <jnirschl@stanford.edu>"]
 python = "^3.10"
 cookiecutter = "^2.1.1"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
 autopep8 = "1.6.0"
 black = "^22.8.0"
