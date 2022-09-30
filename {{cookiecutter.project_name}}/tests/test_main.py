@@ -19,14 +19,14 @@ class TestMain:
         result = runner.invoke(__main__.main, ["--dry-run"])
         assert result.exit_code == 0
 
-    def test_main_success(runner: CliRunner) -> None:
+    def test_main_success(self, runner: CliRunner) -> None:
         """Test successful run."""
         result = runner.invoke(__main__.main)
         assert result.exit_code == 0
 
 
-    def test_main_version(runner: CliRunner) -> None:
+    def test_main_version(self, runner: CliRunner) -> None:
         """Test version."""
         result = runner.invoke(__main__.main, ["--version"])
         assert result.exit_code == 0
-        assert result.output == f"{__main__.__version__}
+        assert result.output == f"{__main__.__version__}"
