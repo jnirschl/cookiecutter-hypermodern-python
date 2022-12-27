@@ -4,19 +4,22 @@ import logging
 from pathlib import Path
 
 import click
+import pkg_resources
 from dotenv import find_dotenv
 from dotenv import load_dotenv
 
 
+__version__ = pkg_resources.get_distribution("bcv").version
+
+
 @click.command()
-@click.argument(
-    "input-dir", type=click.Path(exists=True, path_type=Path),
-)
-@click.option(
-    "--dry-run", is_flag=True, help="Perform a trial run with no changes made."
-)
-@click.version_option()
-def main(input_dir: Path, dry_run: bool = False,) -> None:
+@click.argument("input-dir", type=click.Path(exists=True, path_type=Path))
+@click.option("--dry-run", is_flag=True, help="Perform a trial run with no changes.")
+@click.version_option(__version__)
+def main(
+    input_dir: Path,
+    dry_run: bool = False,
+) -> None:
     """Docstring."""
     logger = logging.getLogger(__name__)
     logger.info(f"Input directory: {input_dir}")
