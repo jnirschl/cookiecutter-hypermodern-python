@@ -9,7 +9,7 @@ from dotenv import find_dotenv
 from dotenv import load_dotenv
 
 
-__version__ = pkg_resources.get_distribution("bcv").version
+__version__ = pkg_resources.get_distribution("{{cookiecutter.package_name}}").version
 
 
 @click.command()
