@@ -2,4 +2,4 @@
 import pkg_resources
 
 
-__version__ = pkg_resources.get_distribution("bcv").version
+__version__ = pkg_resources.get_distribution("{{cookiecutter.package_name}}").version
