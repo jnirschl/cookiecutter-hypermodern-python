@@ -1,32 +1,29 @@
 """Test cases for the __main__ module."""
-import pytest
+import re
+
 from click.testing import CliRunner
 
 from {{cookiecutter.package_name}} import __main__
 
 
-@pytest.fixture
-def runner() -> CliRunner:
-    """Fixture for invoking command-line interfaces."""
-    return CliRunner()
-
 
 class TestMain:
     """Test cases for the main() function."""
 
-    def test_main_dry_run(self, runner: CliRunner) -> None:
+    def test_main_dry_run(self, runner: CliRunner, temp_dir: str) -> None:
         """Test dry run."""
-        result = runner.invoke(__main__.main, ["--dry-run"])
+        result = runner.invoke(__main__.main, [temp_dir, "--dry-run"])
         assert result.exit_code == 0
 
-    def test_main_success(self, runner: CliRunner) -> None:
+    def test_main_success(self, runner: CliRunner, temp_dir: str) -> None:
         """Test successful run."""
-        result = runner.invoke(__main__.main)
+        result = runner.invoke(__main__.main, [temp_dir])
         assert result.exit_code == 0
 
-
-    def test_main_version(self, runner: CliRunner) -> None:
+    def test_main_version(self, runner: CliRunner, temp_dir: str) -> None:
         """Test version."""
-        result = runner.invoke(__main__.main, ["--version"])
+        result = runner.invoke(__main__.main, [temp_dir, "--version"])
         assert result.exit_code == 0
-        assert result.output == f"{__main__.__version__}"
+        assert (
+            re.search(r"\d+\.\d+\.\d+", result.output)[0] == f"{__main__.__version__}"
+        )

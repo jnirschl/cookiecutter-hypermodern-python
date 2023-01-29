@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+"""Configure shared fixtures for {{cookiecutter.package_name}}."""
+
+import pytest
+from click.testing import CliRunner
+
+@pytest.fixture()
+def runner() -> CliRunner:
+    """Fixture for invoking command-line interfaces."""
+    return CliRunner()
+
+@pytest.fixture()
+def temp_dir(tmp_path_factory) -> str:
+    """Create a temporary directory with subdirectories for each class."""
+    temp_dir = tmp_path_factory.mktemp("test_dir")
+
+    return temp_dir.as_posix()
