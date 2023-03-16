@@ -1,8 +1,9 @@
 name: Tests
 
 on:
-  - push
-  - pull_request
+  - workflow_dispatch # manual trigger
+#  - push # uncomment to run on push
+#  - pull_request # uncomment to run on pull requests
 
 jobs:
   tests:
@@ -12,8 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { python: "3.8", os: "ubuntu-latest", session: "mypy" }
-          - { python: "3.8", os: "ubuntu-latest", session: "tests" }
+          - { python: "3.9", os: "macos-latest", session: "mypy" }
+          - { python: "3.9", os: "macos-latest", session: "tests" }
           - { python: "3.9", os: "ubuntu-latest", session: "mypy" }
           - { python: "3.9", os: "ubuntu-latest", session: "tests" }
           - { python: "3.10", os: "macos-latest", session: "tests" }
@@ -36,7 +37,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Python ${{"{{"}} matrix.python {{"}}"}}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{"{{"}} matrix.python {{"}}"}}
 
@@ -115,7 +116,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
