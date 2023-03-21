@@ -24,7 +24,9 @@ def main(
     logger = logging.getLogger(__name__)
     logger.info(f"Input directory: {input_dir}")
     if dry_run:
-        logger.info(" Dry run ")
+        logger.info("Dry run")
+    else:
+        logger.info("Success!")
 
 
 if __name__ == "__main__":
