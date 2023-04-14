@@ -10,6 +10,7 @@ from faker import Faker
 
 
 os.environ["WANDB_MODE"] = "dryrun"
+os.environ["LOGGING_LEVEL"] = "DEBUG"
 
 
 @pytest.fixture()
