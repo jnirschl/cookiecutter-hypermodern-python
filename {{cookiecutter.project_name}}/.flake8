@@ -7,6 +7,6 @@ max-complexity = 10
 docstring-convention = google
 per-file-ignores =
     __init__.py:F401
-    tests/*:S101,F821,S311,F401,
+    tests/*:D103,S101,F821,S311,F401,
 rst-roles = class,const,func,meth,mod,ref
 rst-directives = deprecated
