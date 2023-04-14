@@ -1,26 +1,39 @@
 """Test cases for the __main__ module."""
+import logging
 import re
+from typing import Any
 
+import pytest
 from click.testing import CliRunner
 
 from {{cookiecutter.package_name}} import __main__
 
 
+@pytest.fixture()
+def caplog_info(caplog: Any) -> Any:
+    """Capture log messages at the INFO level."""
+    caplog.set_level(logging.INFO)
+    return caplog
+
 
 class TestMain:
     """Test cases for the main() function."""
 
-    def test_main_dry_run(self, runner: CliRunner, temp_dir: str) -> None:
+    def test_main_dry_run(
+        self, runner: CliRunner, temp_dir: str, caplog_info: Any
+    ) -> None:
         """Test dry run."""
         result = runner.invoke(__main__.main, [temp_dir, "--dry-run"])
         assert result.exit_code == 0
-        assert "Dry run" in result.output
+        assert "Dry run" in caplog_info.text
 
-    def test_main_success(self, runner: CliRunner, temp_dir: str) -> None:
+    def test_main_success(
+        self, runner: CliRunner, temp_dir: str, caplog_info: Any
+    ) -> None:
         """Test successful run."""
         result = runner.invoke(__main__.main, [temp_dir])
         assert result.exit_code == 0
-        assert "Success" in result.output
+        assert "Success" in caplog_info.text
 
     def test_main_version(self, runner: CliRunner, temp_dir: str) -> None:
         """Test version."""
