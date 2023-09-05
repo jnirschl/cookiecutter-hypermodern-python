@@ -8,7 +8,14 @@ pull_request_rules:
   - name: automatic merge for Dependabot pull requests
     conditions:
       - author=dependabot[bot]
-      - title~=(^(build|chore)\(deps\):\s+[B|b]ump [^\s]+ from ([\d]+)\..+ to \d+)|(^Bump [^\s]+ from ([\d]+)\..+ to \1\.)
+      - title~=(^(chore\(deps(-dev)?\)):\s+(Bump|bump|add)\s+([^\s]+)(\s+from\s+[\d\.]+(\s+in\s+\/\.github\/workflows)?\s+to\s+[\d\.]+)?)
+    actions:
+      merge:
+        method: merge
+  - name: automatic merge for Dependabot bumps
+    conditions:
+      - author=dependabot[bot]
+      - title~=(^(Bump|bump) [^\\s]+ from [\\d]+(?:\\.[\\d]+)* to [\\d]+(?:\\.[\\d]+)*( in (?:/\\.github/workflow|/\\.github/workflows|/docs))?$)
     actions:
       merge:
         method: merge
