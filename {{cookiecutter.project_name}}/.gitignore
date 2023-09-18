@@ -35,16 +35,17 @@ pip-delete-this-directory.txt
 
 # Unit test / coverage reports
 htmlcov/
-/.tox/
-/.nox/
-/.coverage
-/.coverage.*
+.tox/
+.nox/
+.coverage
+.coverage.*
 .cache
 nosetests.xml
 coverage.xml
 *.cover
-/.python-version
-/.pytype/
+.python-version
+.pytype/
+.pytest_cache
 
 # Translations
 *.mo
@@ -92,20 +93,26 @@ target/
 /**/*~
 /**/*#
 
-# venv
+# venv and pyenv
 venv/
+.python-version
 
 # exclude data, logs, models, and results from source control by default
 logs/
-models/*.ckpt
-models/*.pickle
-models/*.pt
-models/*.pth
+logs/hydra/*
+logs/wandb/*
 results/
 results/**/*.png
 results/**/*.jpg
+results/**/*.csv
+results/**/*.h5
 
 # slurm logging
 *.out
 *.err
 slurm*.out
+
+# ssh keys
+.key
+.pem
+.pub
