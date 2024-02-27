@@ -23,6 +23,7 @@ args = {
     "license": "BSD-3-Clause",
     "copyright_year": "1891",
     "version": "1.0.0",
+    "python_version": "3.9",
 }
 
 

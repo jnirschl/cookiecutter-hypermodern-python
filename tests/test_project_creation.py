@@ -48,10 +48,22 @@ class TestCookieSetup(object):
                 friendly_name = default_args["project_name"].replace("-", " ").title()
                 assert "# " + friendly_name == next(fin).strip()
 
-    def test_license(self):
+    def test_license(self, default_args):
         license_path = self.path.joinpath("LICENSE")
         assert license_path.exists()
         assert no_curlies(license_path)
+        if not pytest.param.get("license"):
+            license_text = license_path.read_text().split("\n")[0].split(" ")[0]
+            assert license_text == default_args["license"][0]
+
+    def test_python_version(self, default_args):
+        pyversion_path = self.path.joinpath(".python-version")
+        assert pyversion_path.exists()
+        assert no_curlies(pyversion_path)
+        # check for input pytest args
+        if not pytest.param.get("python_version"):
+            pyversion_text = pyversion_path.read_text().split("\n")[0]
+            assert pyversion_text == default_args["python_version"][0]
 
     @pytest.mark.xfail(reason="tomllib not supported until 3.11")
     def test_pyprojecttoml(self, default_args):
