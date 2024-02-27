@@ -23,9 +23,9 @@ Changelog = "https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.proj
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11"
 click = ">=8.0.1"
-python-dotenv = ">=0.21.0"
-pandas = "^1.5.1"
-loguru = "^0.6.0"
+python-dotenv = "^1.0.0"
+pandas = "^2.1.0"
+loguru = "^0.7.0"
 
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
@@ -46,6 +46,7 @@ pep8-naming = ">=0.12.1"
 pre-commit = ">=2.16.0"
 pre-commit-hooks = ">=4.1.0"
 pytest = ">=6.2.5"
+pytest-mock = "^3.12.0"
 pytest-randomly = "^3.12.0"
 pyupgrade = ">=2.29.1"
 safety = ">=1.10.3"
@@ -57,7 +58,6 @@ xdoctest = {extras = ["colors"], version = ">=0.15.10"}
 myst-parser = {version = ">=0.16.1"}
 nox = "^2022.1.7"
 Faker = "^18.0.0"
-pytest-mock = "^3.10.0"
 
 [tool.poetry.scripts]
 {{cookiecutter.project_name}} = "{{cookiecutter.package_name}}.__main__:main"
@@ -68,7 +68,7 @@ tests = ["tests", "*/tests"]
 
 [tool.coverage.run]
 branch = true
-source = ["{{cookiecutter.package_name}}", "tests"]
+source = ["src/{{cookiecutter.package_name}}", "tests"]
 
 [tool.coverage.report]
 show_missing = true
@@ -85,7 +85,8 @@ exclude = "**/docs/**, **/site-packages/**, **/.dvc/**, **/.git/**, **/.pytest_c
 
 [tool.black]
 line-length = 88
-target-version = ["py38"]
+target-version = ["py39"]
+exclude = "/.github/"
 
 [tool.isort]
 profile = "black"
@@ -103,12 +104,20 @@ show_error_codes = true
 show_error_context = true
 
 [tool.pytest.ini_options]
-addopts = "-ra -q"
+addopts = [
+    "-rsxX --showlocals",
+]
+
 markers = [
     "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "smoke: test stability of the deployed build (select with '-m \"smoke\"')",
+    "smoke: determines whether the deployed build is stable or not (select with '-m \"smoke\"')",
     "debug: marks tests as actively under debugging (deselect with '-m \"not debug\"')",
 ]
+norecursedirs = ".git/* .dvc/* build/* data/external/* data/interim/* data/processed/* data/raw/*"
+
+[virtualenvs]
+create = true
+in-project = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

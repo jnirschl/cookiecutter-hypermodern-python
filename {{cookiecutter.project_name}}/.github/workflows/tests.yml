@@ -1,9 +1,14 @@
+# fmt: off
 name: Tests
 
 on:
-  - workflow_dispatch # manual trigger
-#  - push # uncomment to run on push
-#  - pull_request # uncomment to run on pull requests
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+#  push:
+#    branches:
+#      - main
 
 jobs:
   tests:
@@ -13,58 +18,76 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { python: "3.9", os: "macos-latest", session: "mypy" }
-          - { python: "3.9", os: "macos-latest", session: "tests" }
-          - { python: "3.9", os: "ubuntu-latest", session: "mypy" }
-          - { python: "3.9", os: "ubuntu-latest", session: "tests" }
-          - { python: "3.10", os: "macos-latest", session: "tests" }
-          - { python: "3.10", os: "ubuntu-latest", session: "docs-build" }
-          - { python: "3.10", os: "ubuntu-latest", session: "mypy" }
-          - { python: "3.10", os: "ubuntu-latest", session: "pre-commit" }
-          - { python: "3.10", os: "ubuntu-latest", session: "safety" }
-          - { python: "3.10", os: "ubuntu-latest", session: "tests" }
-          - { python: "3.10", os: "ubuntu-latest", session: "typeguard" }
-          - { python: "3.10", os: "ubuntu-latest", session: "xdoctest" }
-          - { python: "3.10", os: "windows-latest", session: "tests" }
+          #          - { python: "3.9", os: "macos-latest", session: "mypy" }
+          #          - { python: "3.9", os: "macos-latest", session: "tests" }
+          #          - { python: "3.9", os: "ubuntu-latest", session: "mypy" }
+          #          - { python: "3.9", os: "ubuntu-latest", session: "tests" }
+#          - { python: "3.10", os: "macos-latest", session: "tests", poetry-version: "1.6.1" }
+          #          - { python: "3.10", os: "ubuntu-latest", session: "docs-build" }
+          #          - { python: "3.10", os: "ubuntu-latest", session: "mypy" }
+          #          - { python: "3.10", os: "ubuntu-latest", session: "pre-commit" }
+          #          - { python: "3.10", os: "ubuntu-latest", session: "safety" }
+          - { python: "3.10", os: "ubuntu-latest", session: "tests", poetry-version: "1.6.1" }
+          #          - { python: "3.10", os: "ubuntu-latest", session: "typeguard" }
+          #          - { python: "3.10", os: "ubuntu-latest", session: "xdoctest" }
+#          - { python: "3.10", os: "windows-latest", session: "tests", poetry-version: "1.6.1" }
 
     env:
       NOXSESSION: ${{"{{"}} matrix.session {{"}}"}}
       FORCE_COLOR: "1"
       PRE_COMMIT_COLOR: "always"
+#      REPO_DEPLOY_KEY: ${{"{{"}} secrets.REPO_DEPLOY_KEY {{"}}"}} # uncomment if needed
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        id: checkout
+        uses: actions/checkout@v4
 
       - name: Set up Python ${{"{{"}} matrix.python {{"}}"}}
-        uses: actions/setup-python@v4
+        id: setup-python
+        uses: actions/setup-python@v5
         with:
           python-version: ${{"{{"}} matrix.python {{"}}"}}
+          cache: "pip"
+
+      - name: Install poetry
+        id: install-poetry
+        uses: snok/install-poetry@v1.3.4
+        with:
+          poetry-version: ${{"{{"}} matrix.poetry-version {{"}}"}}
+          virtualenvs-create: true
+          virtualenvs-in-project: true # if true, create .venv in project root; else create virtualenvs in {cache-dir}/virtualenvs
+          installer-parallel: true
 
       - name: Upgrade pip
+        id: upgrade-pip
         run: |
           pip install --constraint=.github/workflows/constraints.txt pip
           pip --version
 
-      - name: Upgrade pip in virtual environments
-        shell: python
-        run: |
-          import os
-          import pip
-
-          with open(os.environ["GITHUB_ENV"], mode="a") as io:
-              print(f"VIRTUALENV_PIP={pip.__version__}", file=io)
-
-      - name: Install Poetry
-        run: |
-          pipx install --pip-args=--constraint=.github/workflows/constraints.txt poetry
-          poetry --version
-
       - name: Install Nox
+        id: install-nox
         run: |
           pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
           pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
           nox --version
+
+      - name: Cache Poetry virtual environments and pip cache
+        id: cache
+        uses: actions/cache@v3.3.2
+        with:
+          path: |
+            ./.venv
+            ./.nox/
+            ~/.local/
+          key: ${{"{{"}} runner.os {{"}}"}}-nox-poetry-${{"{{"}} matrix.python {{"}}"}}-${{"{{"}} hashFiles('poetry.lock') {{"}}"}}
+
+## uncomment if need to install private repo with deploy key
+#      - name: Give GitHub Actions access to bcv
+#        id: ssh-agent-setup
+#        uses: webfactory/ssh-agent@v0.8.0
+#        with:
+#          ssh-private-key: ${{"{{"}} secrets.REPO_DEPLOY_KEY {{"}}"}}
 
       - name: Compute pre-commit cache key
         if: matrix.session == 'pre-commit'
@@ -77,33 +100,37 @@ jobs:
           python = "py{}.{}".format(*sys.version_info[:2])
           payload = sys.version.encode() + sys.executable.encode()
           digest = hashlib.sha256(payload).hexdigest()
-          result = {{ '"${{ runner.os }}-{}-{}-pre-commit".format(python, digest[:8])' }}
+          result = {{ '"${{ runner.os }}-{}-{}-pre-commit".format(python, digest[:8])' }} # TODO fix braces
 
           print("::set-output name=result::{}".format(result))
 
       - name: Restore pre-commit cache
         uses: actions/cache@v3
         if: matrix.session == 'pre-commit'
+        id: pre-commit-cache-restore
         with:
           path: ~/.cache/pre-commit
           key: {{ "${{ steps.pre-commit-cache.outputs.result }}-${{ hashFiles('.pre-commit-config.yaml') }}" }}
           restore-keys: |
-            {{ "${{ steps.pre-commit-cache.outputs.result }}-" }}
+            {{ "${{ steps.pre-commit-cache.outputs.result }}-" }} # TODO fix braces
 
       - name: Run Nox
+        id: run-nox
         run: |
           nox --python=${{"{{"}} matrix.python {{"}}"}}
 
       - name: Upload coverage data
         if: always() && matrix.session == 'tests'
-        uses: "actions/upload-artifact@v3"
+        id: upload-coverage-data
+        uses: "actions/upload-artifact@v4"
         with:
           name: coverage-data
           path: ".coverage.*"
 
       - name: Upload documentation
         if: matrix.session == 'docs-build'
-        uses: actions/upload-artifact@v3
+        id: upload-docs
+        uses: actions/upload-artifact@v4
         with:
           name: docs
           path: docs/_build
@@ -113,41 +140,64 @@ jobs:
     needs: tests
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v3
+        id: checkout
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        id: setup-python
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version-file: '.python-version'
+          cache: "pip"
+
+      - name: Install poetry
+        id: install-poetry
+        uses: snok/install-poetry@v1.3.4
+        with:
+          version: "1.6.1"
+          virtualenvs-create: true
+          virtualenvs-in-project: true  # if true, create .venv in project root;else create virtualenvs in {cache-dir}/virtualenvs
+          installer-parallel: true
 
       - name: Upgrade pip
+        id: upgrade-pip
         run: |
           pip install --constraint=.github/workflows/constraints.txt pip
           pip --version
 
-      - name: Install Poetry
-        run: |
-          pipx install --pip-args=--constraint=.github/workflows/constraints.txt poetry
-          poetry --version
-
       - name: Install Nox
+        id: install-nox
         run: |
           pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
           pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
           nox --version
 
+      - name: Cache Poetry virtual environments and pip cache
+        id: cache
+        uses: actions/cache@v3.3.2
+        with:
+          path: |
+            ./.venv
+            ./.nox/
+            ~/.local/
+          key: ${{"{{"}} runner.os {{"}}"}}-poetry-${{"{{"}} matrix.python {{"}}"}}-${{"{{"}} hashFiles('poetry.lock') {{"}}"}}
+
       - name: Download coverage data
-        uses: actions/download-artifact@v3
+        id: download-coverage
+        uses: actions/download-artifact@v4
         with:
           name: coverage-data
 
       - name: Combine coverage data and display human readable report
+        id: combine-coverage
         run: |
           nox --session=coverage
 
       - name: Create coverage report
+        id: create-coverage-report
         run: |
           nox --session=coverage -- xml
 
       - name: Upload coverage report
-        uses: codecov/codecov-action@v3.1.1
+        id: upload-coverage-report
+        uses: codecov/codecov-action@v3.1.4

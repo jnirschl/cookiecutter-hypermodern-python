@@ -43,7 +43,6 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
-.python-version
 .pytype/
 .pytest_cache
 
@@ -95,17 +94,19 @@ target/
 
 # venv and pyenv
 venv/
-.python-version
 
 # exclude data, logs, models, and results from source control by default
 logs/
 logs/hydra/*
 logs/wandb/*
+wandb/*
 results/
 results/**/*.png
 results/**/*.jpg
 results/**/*.csv
 results/**/*.h5
+tmp/
+models/
 
 # slurm logging
 *.out
@@ -116,3 +117,6 @@ slurm*.out
 .key
 .pem
 .pub
+
+# gpg files
+*.gpg

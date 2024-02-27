@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Configure shared fixtures for {{cookiecutter.package_name}}."""
+
 import os
 import random
 from pathlib import Path

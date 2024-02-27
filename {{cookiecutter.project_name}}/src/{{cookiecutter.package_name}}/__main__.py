@@ -4,13 +4,10 @@ import logging
 from pathlib import Path
 
 import click
-import pkg_resources
 from dotenv import find_dotenv
 from dotenv import load_dotenv
 
-
-__version__ = pkg_resources.get_distribution("{{cookiecutter.package_name}}").version
-
+from {{cookiecutter.package_name}} import __version__
 
 @click.command()
 @click.argument("input-dir", type=click.Path(exists=True, path_type=Path))
