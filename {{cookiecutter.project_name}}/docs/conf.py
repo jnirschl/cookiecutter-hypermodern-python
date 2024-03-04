@@ -1,4 +1,5 @@
 """Sphinx configuration."""
+
 project = "{{ cookiecutter.project_name.replace('-', ' ').title() }}"
 author = "{{cookiecutter.author}}"
 copyright = "{{cookiecutter.copyright_year}}, {{cookiecutter.author}}"

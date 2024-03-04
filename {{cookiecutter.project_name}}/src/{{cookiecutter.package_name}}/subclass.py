@@ -3,6 +3,7 @@
 
 from .base_class import BaseClass
 
+
 class Subclass(BaseClass):
     """Template for a subclass."""
 

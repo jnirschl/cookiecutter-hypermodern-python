@@ -27,8 +27,14 @@ def temp_dir(tmp_path_factory) -> str:
 
     return temp_dir.as_posix()
 
+@pytest.fixture()
+def temp_filepath():
+    """Return fake filepath."""
+    fake = Faker()
+    return fake.file_path(category="image")
 
-@pytest.fixture(scope="session")
+
+@pytest.fixture()
 def invalid_dir() -> str:
     """Create a temporary directory with subdirectories for each class."""
     depth = random.randint(1, 5)

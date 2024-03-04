@@ -6,6 +6,7 @@ import pytest
 
 from {{cookiecutter.package_name}}.subclass import Subclass
 
+
 @pytest.fixture
 def name():
     """Create a random name."""

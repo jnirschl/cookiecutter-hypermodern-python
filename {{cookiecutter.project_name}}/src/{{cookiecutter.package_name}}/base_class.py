@@ -15,7 +15,4 @@ class BaseClass(object):
 
     def __str__(self) -> str:
         """An easy-to-read string representation of the class."""
-        return (
-            f"{self.__class__.__name__}\n"
-            f"\tName: {self.name}\n"
-        )
+        return f"{self.__class__.__name__}\n\tName: {self.name}\n"

@@ -1,20 +1,20 @@
 # Contributor Guide
 
 Thank you for your interest in improving this project.
-This project is open-source under the [{{cookiecutter.license.replace("-", " ")}} license] and
+This project is open-source under the [MIT license] and
 welcomes contributions in the form of bug reports, feature requests, and pull requests.
 
 Here is a list of important resources for contributors:
 
-- [Source Code]
-- [Documentation]
-- [Issue Tracker]
-- [Code of Conduct]
+-   [Source Code]
+-   [Documentation]
+-   [Issue Tracker]
+-   [Code of Conduct]
 
-[{{cookiecutter.license.replace("-", " ").lower()}} license]: https://opensource.org/licenses/{{cookiecutter.license}}
-[source code]: https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}
-[documentation]: https://{{cookiecutter.project_name}}.readthedocs.io/
-[issue tracker]: https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/issues
+[mit license]: https://opensource.org/licenses/MIT
+[source code]: https://github.com/jnirschl/ArgusDP
+[documentation]: https://ArgusDP.readthedocs.io/
+[issue tracker]: https://github.com/jnirschl/ArgusDP/issues
 
 ## How to report a bug
 
@@ -22,11 +22,11 @@ Report bugs on the [Issue Tracker].
 
 When filing an issue, make sure to answer these questions:
 
-- Which operating system and Python version are you using?
-- Which version of this project are you using?
-- What did you do?
-- What did you expect to see?
-- What did you see instead?
+-   Which operating system and Python version are you using?
+-   Which version of this project are you using?
+-   What did you do?
+-   What did you expect to see?
+-   What did you see instead?
 
 The best way to get your bug fixed is to provide a test case,
 and/or steps to reproduce the issue.
@@ -39,9 +39,9 @@ Request features on the [Issue Tracker].
 
 You need Python 3.7+ and the following tools:
 
-- [Poetry]
-- [Nox]
-- [nox-poetry]
+-   [Poetry]
+-   [Nox]
+-   [nox-poetry]
 
 Install the package with development requirements:
 
@@ -54,7 +54,7 @@ or the command-line interface:
 
 ```console
 $ poetry run python
-$ poetry run {{cookiecutter.project_name}}
+$ poetry run ArgusDP
 ```
 
 [poetry]: https://python-poetry.org/
@@ -93,9 +93,9 @@ Open a [pull request] to submit changes to this project.
 
 Your pull request needs to meet the following guidelines for acceptance:
 
-- The Nox test suite must pass without errors and warnings.
-- Include unit tests. This project maintains 100% code coverage.
-- If your changes add functionality, update the documentation accordingly.
+-   The Nox test suite must pass without errors and warnings.
+-   Include unit tests. This project maintains 100% code coverage.
+-   If your changes add functionality, update the documentation accordingly.
 
 Feel free to submit early, though—we can always iterate on this.
 
@@ -108,7 +108,7 @@ $ nox --session=pre-commit -- install
 It is recommended to open an issue before starting work on anything.
 This will allow a chance to talk it over with the owners and validate your approach.
 
-[pull request]: https://github.com/{{cookiecutter.github_user}}/{{cookiecutter.project_name}}/pulls
+[pull request]: https://github.com/jnirschl/ArgusDP/pulls
 
 <!-- github-only -->
 

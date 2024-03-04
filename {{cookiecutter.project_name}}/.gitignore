@@ -120,3 +120,6 @@ slurm*.out
 
 # gpg files
 *.gpg
+
+# cookiecutter
+.cookiecutter.json
