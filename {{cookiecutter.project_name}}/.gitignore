@@ -68,6 +68,8 @@ target/
 
 # Pycharm
 *.idea/*
+*.run/*
+*.iml
 
 # VS Code
 .vscode/
