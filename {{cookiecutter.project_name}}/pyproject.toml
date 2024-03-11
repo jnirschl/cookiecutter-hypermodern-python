@@ -30,6 +30,13 @@ rich = "^13.7.0"
 tqdm = "^4.66.2"
 ujson = "^5.8.0"
 
+# group: dev dependencies
+# You can install optional groups by using the --with option:
+#   poetry install --with dev
+#   poetry install --without dev
+# When used together, --without takes precedence over --with.
+[tool.poetry.group.dev]
+optional = true
 [tool.poetry.group.dev.dependencies]
 Pygments = ">=2.10.0"
 autopep8 = "1.6.0"
