@@ -27,6 +27,7 @@ def temp_dir(tmp_path_factory) -> str:
 
     return temp_dir.as_posix()
 
+
 @pytest.fixture()
 def temp_filepath():
     """Return fake filepath."""
